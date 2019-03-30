@@ -4,4 +4,4 @@ grpcio==1.14.1
 grpcio-tools==1.14.1
 protobuf==3.6.1
 six==1.11.0
-hgtk >= 0.1.1
+hbcvt
