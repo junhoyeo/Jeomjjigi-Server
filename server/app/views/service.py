@@ -30,7 +30,7 @@ PAGE_LIMIT = 10 # limit of braille chars per page
 #     return re.sub(u'[^((?=\u3131-\ucb4c)(?=A-Za-z)(?=(\,|\.|\-|\?|\_|\!)+)]', '', query)
 
 def filter_query(query):
-    reg = re.compile('[^-가-힣a-bA-Z0-9,._?!]')
+    reg = re.compile('[^-가-힣a-bA-Z0-9,._ ?!]')
     return reg.sub('', query)
 
 def convert(query):
