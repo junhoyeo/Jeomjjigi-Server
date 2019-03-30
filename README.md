@@ -9,11 +9,12 @@
 ## ./server/secret.json
 ```json
 {
+    "api_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxx-x-xxxxxxxxx",
     "connection": "HostName=xxxxx.azure-devices.net;SharedAccessKeyName=xxxxx;SharedAccessKey=xxxxx"
 }
 ```
 
-`./server/`에 위와 같이 Azure IoT hub에 대한 connection string을 포함하는 `secret.json`을 생성해 둔다.
+`./server/`에 위와 같이 Google Cloud Vision API가 사용 설정된 api_key와 Azure IoT hub에 대한 connection string을 포함하는 `secret.json`을 생성해 둔다.
 
 ## 1. 애플리케이션 → 서버 📱
 
