@@ -114,7 +114,7 @@ class ServiceConvertText(Resource):
                 'error': "'query' or 'device_id' not found"
             }, 400
 
-@api.resource('/convert/image') # /api/service/image
+@api.resource('/convert/image') # /api/service/convert/image
 class ServiceConvertImage(Resource):
     def post(self):
         image = request.json.get('image')
