@@ -24,7 +24,7 @@ from app.utils.ocr import ocr_image
 
 api = Api(api_blueprint, prefix='/service')
 
-PAGE_LIMIT = 10 # limit of braille chars per page
+PAGE_LIMIT = 5 # limit of braille chars per page
 
 # def filter_query(query):
 #     return re.sub(u'[^((?=\u3131-\ucb4c)(?=A-Za-z)(?=(\,|\.|\-|\?|\_|\!)+)]', '', query)
