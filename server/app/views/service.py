@@ -151,10 +151,7 @@ class ServicePagePrev(Resource):
 
                 print(send_to_device(device_id, device.page())) # device.page()를 전송
                 
-                return {
-                    'success': True,
-                    'result': device.page()
-                }
+                return device.page()
             else:
                 return {
                     'success': False,
@@ -176,10 +173,7 @@ class ServicePageNext(Resource):
 
                 print(send_to_device(device_id, device.page())) # device.page()를 전송
 
-                return {
-                    'success': True,
-                    'result': device.page()
-                }
+                return device.page()
             else:
                 return {
                     'success': False,
