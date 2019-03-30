@@ -18,6 +18,7 @@ import pprint, json
 from app.views import api_blueprint, BaseResource
 from app.models import Device, device_exist
 from app.utils.connection import send_to_device
+from app.utils.ocr import ocr_image
 
 api = Api(api_blueprint, prefix='/service')
 
@@ -113,8 +114,32 @@ class ServiceConvertText(Resource):
                 'error': "'query' or 'device_id' not found"
             }, 400
 
-# paging resource
-# todo: SDK 이용해 IoT 디바이스로 데이터 전송
+@api.resource('/convert/image') # /api/service/image
+class ServiceConvertImage(Resource):
+    def post(self):
+        image = request.json.get('image')
+        device_id = request.json.get('device_id')
+        if image and device_id:
+            try: 
+                query = ocr_image(image)
+                text = convert(query)
+                if device_exist(device_id):
+                    device = Device.query.filter_by(name=device_id).first()
+                    device.update(text)
+                else:
+                    device = Device(
+                        name=device_id,
+                        text=text
+                    )
+                    device.save()
+                print(send_to_device(device_id, device.page()))
+                return { 'success': True }
+            except:
+                return { 'success': False, 'error': 'an error has occurred' }, 500
+        else:
+            return { 'success': False, 'error': "'query' or 'device_id' not found" }, 400
+
+# paging resources
 
 @api.resource('/page/prev/<string:device_id>') # /api/service/page/prev
 class ServicePagePrev(Resource):
