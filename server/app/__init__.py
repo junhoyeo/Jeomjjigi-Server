@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 import os
 
@@ -11,7 +10,6 @@ from config import DevConfig
 def create_app():
     _app = Flask(__name__)
     CORS().init_app(_app)
-    JWTManager().init_app(_app)
 
     _app.secret_key = os.urandom(24)
     _app.logger.propagate = True

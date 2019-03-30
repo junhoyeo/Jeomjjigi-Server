@@ -1,14 +1,25 @@
 from flask import request
 from flask_restful import Api, Resource
 from hbcvt import h2b
-import json
-import pprint
+import pprint, json
+
+# ***** failed *****
+# import iothub_service_client
+# from iothub_service_client import IoTHubMessaging, IoTHubMessage, IoTHubError
+
+# def open_complete_callback(context):
+#     print('open_complete_callback called with context: {0}'.format(context))
+
+# def send_complete_callback(context, messaging_result):
+#     context = 0
+#     print('send_complete_callback called with context : {0}'.format(context))
+#     print('messagingResult : {0}'.format(messaging_result))
 
 from app.views import api_blueprint, BaseResource
 from app.models import Device, device_exist
+from app.utils.connection import send_to_device
 
 api = Api(api_blueprint, prefix='/service')
-connection_string = json.load(open('./secret.json'))['connection']
 
 PAGE_LIMIT = 10 # limit of braille chars per page
 
@@ -76,6 +87,18 @@ class ServiceConvertText(Resource):
                 # todo: send request to device with device_id
                 # request to device: device.page()
 
+                print(send_to_device(device_id, device.page()))
+                # ***** failed *****
+                # msg = json.dumps(device.page())
+                # try:
+                #     iothub_messaging = IoTHubMessaging(connection_string)
+                #     iothub_messaging.open(open_complete_callback, 0)
+                #     message = IoTHubMessage(bytearray(msg, 'utf8'))
+                #     iothub_messaging.send_async(device_id, message, send_complete_callback, 1)
+
+                # except IoTHubError as iothub_error:
+                #     print("Unexpected error {0}" % iothub_error)
+
                 return {
                     'success': True
                 }
@@ -100,7 +123,9 @@ class ServicePagePrev(Resource):
         if device_exist(device_id):
             device = Device.query.filter_by(name=device_id).first()
             if device.prev_page(): # 페이지 잘 돌아감
-                # device.page()를 전송
+
+                print(send_to_device(device_id, device.page())) # device.page()를 전송
+                
                 return {
                     'success': True,
                     'result': device.page()
@@ -123,7 +148,9 @@ class ServicePageNext(Resource):
         if device_exist(device_id):
             device = Device.query.filter_by(name=device_id).first()
             if device.next_page(): # 페이지 잘 넘어감
-                # device.page()를 전송
+
+                print(send_to_device(device_id, device.page())) # device.page()를 전송
+
                 return {
                     'success': True,
                     'result': device.page()

@@ -11,11 +11,8 @@ hbcvt = "*"
 flask = "*"
 flask-sqlalchemy = "*"
 flask-restful = "*"
-flask-jwt-extended = "*"
 flask-migrate = "*"
 flask-cors = "*"
-passlib = "*"
-azure-iothub-service-client = "*"
 
 [requires]
 python_version = "3.7"
