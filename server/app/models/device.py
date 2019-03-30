@@ -21,7 +21,8 @@ class Device(db.Model):
     def next_page(self): # 다음 페이지
         try: 
             self.text[self.current + 1]
-            self.current + 1
+            self.current += 1
+            db.session.commit()
             return True
         except IndexError:
             return False
@@ -29,7 +30,8 @@ class Device(db.Model):
     def prev_page(self): # 이전 페이지 
         try: 
             self.text[self.current - 1]
-            self.current - 1
+            self.current -= 1
+            db.session.commit()
             return True
         except IndexError:
             return False

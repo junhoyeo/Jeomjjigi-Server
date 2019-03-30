@@ -86,7 +86,7 @@ class ServiceConvertText(Resource):
             return {
                 'success': False,
                 'error': "'query' or 'device_id' not found"
-            }, 500
+            }, 400
 
 # paging resource
 # todo: SDK 이용해 IoT 디바이스로 데이터 전송
@@ -108,12 +108,12 @@ class ServicePagePrev(Resource):
                 return {
                     'success': False,
                     'error': 'index error'
-                }
+                }, 400
         else:
             return {
                 'success': False,
                 'error': 'no such device'
-            }
+            }, 400
 
 @api.resource('/page/next') # /api/service/page/next
 class ServicePageNext(Resource):
@@ -132,9 +132,9 @@ class ServicePageNext(Resource):
                 return {
                     'success': False,
                     'error': 'index error'
-                }
+                }, 400
         else:
             return {
                 'success': False,
                 'error': 'no such device'
-            }
+            }, 400
