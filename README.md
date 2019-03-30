@@ -1,7 +1,8 @@
 # Seoul HW Hackathon 2019
 
 # 📌 API Server Docs
-- `nohup python3 -u run.py &`
+- `nohup python -u serve.py &`
+
 <!-- - `azure-iothub-service-client` 패키지 사이즈 때문에 lock이 오래 걸리므로 `pipenv install --skip-lock`를 권장함 -->
 <!-- - MacOS에서 `brew install boost-python3` 해야 하더라 -->
 
