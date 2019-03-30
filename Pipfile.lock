@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bdfae66b902838a7c35e7c5c92a3298b42ff1355375b6ec0f65daa8285f055b7"
+            "sha256": "8c37e40d6b003363bbff96dc4c1cf770088aaa6aef1f7e79bfd4ed9e992383d9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -51,13 +51,6 @@
             ],
             "index": "pypi",
             "version": "==3.0.7"
-        },
-        "flask-jwt-extended": {
-            "hashes": [
-                "sha256:68035dba637fd58c0f0b308e49103cba7f6977aa301d958ddbd7b811a91c6dec"
-            ],
-            "index": "pypi",
-            "version": "==3.18.0"
         },
         "flask-migrate": {
             "hashes": [
@@ -148,21 +141,6 @@
                 "sha256:e249096428b3ae81b08327a63a485ad0878de3fb939049038579ac0ef61e17e7"
             ],
             "version": "==1.1.1"
-        },
-        "passlib": {
-            "hashes": [
-                "sha256:3d948f64138c25633613f303bcc471126eae67c04d5e3f6b7b8ce6242f8653e0",
-                "sha256:43526aea08fa32c6b6dbbbe9963c4c767285b78147b7437597f992812f69d280"
-            ],
-            "index": "pypi",
-            "version": "==1.7.1"
-        },
-        "pyjwt": {
-            "hashes": [
-                "sha256:5c6eca3c2940464d106b99ba83b00c6add741c9becaec087fb7ccdefea71350e",
-                "sha256:8d59a976fb773f3e6a39c85636357c4f0e242707394cadadd9814f5cbaa20e96"
-            ],
-            "version": "==1.7.1"
         },
         "python-dateutil": {
             "hashes": [
