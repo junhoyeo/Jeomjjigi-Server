@@ -41,7 +41,7 @@ def convert(query):
     braille_count = 0 # number of braille chars in current page
     page = []
     for char in query:
-        brailles = [i[1][0] for i in h2b.letter(char)] 
+        brailles = [i[1][0][:3] + list(reversed(i[1][0][3:])) for i in h2b.letter(char)]
             # braille chars made with current letter(char)
         # print(char, brailles) # for debugging
         if braille_count + len(brailles) > 10: # next page
