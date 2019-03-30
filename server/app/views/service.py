@@ -1,7 +1,9 @@
 from flask import request
 from flask_restful import Api, Resource
 from hbcvt import h2b
-import pprint, json
+import re
+import json
+import pprint
 
 # ***** failed *****
 # import iothub_service_client
@@ -24,9 +26,17 @@ api = Api(api_blueprint, prefix='/service')
 
 PAGE_LIMIT = 10 # limit of braille chars per page
 
+# def filter_query(query):
+#     return re.sub(u'[^((?=\u3131-\ucb4c)(?=A-Za-z)(?=(\,|\.|\-|\?|\_|\!)+)]', '', query)
+
+def filter_query(query):
+    reg = re.compile('[^-가-힣a-bA-Z0-9,._?!]')
+    return reg.sub('', query)
+
 def convert(query):
     '''전달된 텍스트 query를 점자로 변환하며 10개 이하의 문자가 한 페이지에 들어가게 나누고, 
         각 페이지(list)로 이루어진 리스트 result를 반환합니다'''
+    query = filter_query(query)
     result = []
     braille_count = 0 # number of braille chars in current page
     page = []
