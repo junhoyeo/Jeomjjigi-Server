@@ -46,7 +46,7 @@ def convert(query):
     # for page in result:
     #     pprint.pprint(page) # for debugging
     #     print(len(page))
-    pprint.pprint(result)
+    # pprint.pprint(result)
     return result
 
 @api.resource('/') # /api/service/
@@ -88,7 +88,7 @@ class ServiceConvertText(Resource):
                 # todo: send request to device with device_id
                 # request to device: device.page()
 
-                print(send_to_device(device_id, device.page()))
+                send_to_device(device_id, device.page())
                 # ***** failed *****
                 # msg = json.dumps(device.page())
                 # try:
@@ -132,7 +132,7 @@ class ServiceConvertImage(Resource):
                         text=text
                     )
                     device.save()
-                print(send_to_device(device_id, device.page()))
+                send_to_device(device_id, device.page())
                 return { 'success': True }
             except:
                 return { 'success': False, 'error': 'an error has occurred' }, 500
@@ -149,7 +149,7 @@ class ServicePagePrev(Resource):
             device = Device.query.filter_by(name=device_id).first()
             if device.prev_page(): # 페이지 잘 돌아감
 
-                print(send_to_device(device_id, device.page())) # device.page()를 전송
+                send_to_device(device_id, device.page()) # device.page()를 전송
                 
                 return device.page()
             else:
@@ -171,7 +171,7 @@ class ServicePageNext(Resource):
             device = Device.query.filter_by(name=device_id).first()
             if device.next_page(): # 페이지 잘 넘어감
 
-                print(send_to_device(device_id, device.page())) # device.page()를 전송
+                send_to_device(device_id, device.page()) # device.page()를 전송
 
                 return device.page()
             else:
