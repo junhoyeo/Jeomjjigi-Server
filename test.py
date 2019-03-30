@@ -1,6 +1,7 @@
 import requests 
 
-r = requests.post('http://localhost:8080/api/service/convert', json={
+r = requests.post('http://localhost:8080/api/service/convert/text', json={
+    'device_id': 'test',
     'query': '서울하드웨어해커톤'
 })
 

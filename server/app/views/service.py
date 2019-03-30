@@ -4,6 +4,7 @@ from hbcvt import h2b
 import pprint
 
 from app.views import api_blueprint, BaseResource
+from app.models import Device, device_exist
 
 api = Api(api_blueprint, prefix='/service')
 
@@ -41,48 +42,99 @@ class ServiceTest(Resource):
             'success': True
         }
 
-@api.resource('/convert') # /api/auth/service
-class ServiceConvert(BaseResource):
-    def get(self):
-        query = request.args.get('query')
-        if query:
+@api.resource('/convert/text') # /api/service/text
+class ServiceConvertText(Resource):
+    def post(self):
+        # receive (from app): (query, device_id)
+        # service: 
+            # check for strange chars in text
+            # if not strange:
+                # save text in Device object(device_id)
+                # send request with page 1 to device
+                # respond to app: success
+            # else respond to app: fail
+        query = request.json.get('query')
+        device_id = request.json.get('device_id')
+        if query and device_id:
+            # todo: check strange text
             try: 
-                result = convert(query)
-                return self.safe_json({
-                    'success': True,
-                    'query': query,
-                    'result': result
-                })
+                text = convert(query) # convert to braille data
+                
+                # save to device
+                if device_exist(device_id):
+                    device = Device.query.filter_by(name=device_id).first()
+                    device.update(text)
+                else:
+                    device = Device(
+                        name=device_id,
+                        text=text
+                    )
+                    device.save()
+                
+                # todo: send request to device with device_id
+                # request to device: device.page()
+
+                return {
+                    'success': True
+                }
             except:
-                return self.safe_json({
+                return {
                     'success': False,
-                    'query': query,
                     'error': 'an error has occurred'
-                }, status_code=500)
+                }, 500
         else:
             return {
                 'success': False,
-                'error': "'query' not found"
+                'error': "'query' or 'device_id' not found"
             }, 500
 
+# paging resource
+# todo: SDK 이용해 IoT 디바이스로 데이터 전송
+
+@api.resource('/page/prev') # /api/service/page/prev
+class ServicePagePrev(Resource):
     def post(self):
-        query = request.json.get('query')
-        if query:
-            try: 
-                result = convert(query)
-                return self.safe_json({
+        # receive (from device): device_id
+        device_id = request.json.get('device_id')
+        if device_exist(device_id):
+            device = Device.query.filter_by(name=device_id).first()
+            if device.prev_page(): # 페이지 잘 돌아감
+                # device.page()를 전송
+                return {
                     'success': True,
-                    'query': query,
-                    'result': result
-                })
-            except:
-                return self.safe_json({
+                    'result': device.page()
+                }
+            else:
+                return {
                     'success': False,
-                    'query': query,
-                    'error': 'an error has occurred'
-                }, status_code=500)
+                    'error': 'index error'
+                }
         else:
             return {
                 'success': False,
-                'error': "'query' not found"
-            }, 500
+                'error': 'no such device'
+            }
+
+@api.resource('/page/next') # /api/service/page/next
+class ServicePageNext(Resource):
+    def post(self):
+        # receive (from device): device_id
+        device_id = request.json.get('device_id')
+        if device_exist(device_id):
+            device = Device.query.filter_by(name=device_id).first()
+            if device.next_page(): # 페이지 잘 넘어감
+                # device.page()를 전송
+                return {
+                    'success': True,
+                    'result': device.page()
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': 'index error'
+                }
+        else:
+            return {
+                'success': False,
+                'error': 'no such device'
+            }
