@@ -121,7 +121,9 @@ class ServiceConvertImage(Resource):
         device_id = request.json.get('device_id')
         if image and device_id:
             try: 
-                query = ocr_image(image)
+                query = ocr_image(device_id, image)
+                if not query:
+                    return { 'success': False, 'error': 'no text found' }
                 text = convert(query)
                 if device_exist(device_id):
                     device = Device.query.filter_by(name=device_id).first()

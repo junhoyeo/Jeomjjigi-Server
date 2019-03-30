@@ -15,4 +15,7 @@ def ocr_image(device_id, base64_image):
             }]
         }]
     })
-    return res.json()['responses'][0]['fullTextAnnotation']['text'].replace('\n', ' ')
+    try:
+        return res.json()['responses'][0]['fullTextAnnotation']['text'].replace('\n', ' ')
+    except KeyError:
+        return False
