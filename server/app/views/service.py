@@ -46,7 +46,7 @@ def convert(query):
     # for page in result:
     #     pprint.pprint(page) # for debugging
     #     print(len(page))
-    # pprint.pprint(result)
+    pprint.pprint(result)
     return result
 
 @api.resource('/') # /api/service/

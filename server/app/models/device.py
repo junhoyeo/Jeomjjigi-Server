@@ -13,6 +13,7 @@ class Device(db.Model):
 
     def update(self, text):
         self.text = text
+        self.current = 0
         db.session.commit()
 
     def page(self): # get current page
