@@ -1,6 +1,16 @@
 # Seoul HW Hackathon 2019
 
 # 📌 API Server Docs
+- `azure-iothub-service-client` 패키지 사이즈 때문에 lock이 오래 걸리므로 `pipenv install --skip-lock`를 권장함
+
+## ./server/secret.json
+```json
+{
+    "connection": "HostName=xxxxx.azure-devices.net;SharedAccessKeyName=xxxxx;SharedAccessKey=xxxxx"
+}
+```
+
+`./server/`에 위와 같이 Azure IoT hub에 대한 connection string을 포함하는 `secret.json`을 생성해 둔다.
 
 ## 1. 애플리케이션 → 서버 📱
 
@@ -42,19 +52,11 @@
 
 ## 2. IoT 디바이스 → 서버 💡
 
-## [POST] /api/service/page/prev
+## [GET] /api/service/page/prev/{device_id:string}
 
-## [POST] /api/service/page/next
+## [GET] /api/service/page/next/{device_id:string}
 
 디바이스에서 `device_id`를 페이지 넘김에 따라 전송하면 서버는 해당 디바이스가 읽어야 할 페이지 데이터를 전송한다(안드는 몰라도 됨).
-
-### request
-
-```json
-{
-    "device_id": "odinevk"
-}
-```
 
 ### response
 

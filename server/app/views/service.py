@@ -1,12 +1,14 @@
 from flask import request
 from flask_restful import Api, Resource
 from hbcvt import h2b
+import json
 import pprint
 
 from app.views import api_blueprint, BaseResource
 from app.models import Device, device_exist
 
 api = Api(api_blueprint, prefix='/service')
+connection_string = json.load(open('./secret.json'))['connection']
 
 PAGE_LIMIT = 10 # limit of braille chars per page
 
@@ -91,11 +93,10 @@ class ServiceConvertText(Resource):
 # paging resource
 # todo: SDK 이용해 IoT 디바이스로 데이터 전송
 
-@api.resource('/page/prev') # /api/service/page/prev
+@api.resource('/page/prev/<string:device_id>') # /api/service/page/prev
 class ServicePagePrev(Resource):
-    def post(self):
+    def get(self, device_id):
         # receive (from device): device_id
-        device_id = request.json.get('device_id')
         if device_exist(device_id):
             device = Device.query.filter_by(name=device_id).first()
             if device.prev_page(): # 페이지 잘 돌아감
@@ -115,11 +116,10 @@ class ServicePagePrev(Resource):
                 'error': 'no such device'
             }, 400
 
-@api.resource('/page/next') # /api/service/page/next
+@api.resource('/page/next/<string:device_id>') # /api/service/page/next
 class ServicePageNext(Resource):
-    def post(self):
+    def get(self, device_id):
         # receive (from device): device_id
-        device_id = request.json.get('device_id')
         if device_exist(device_id):
             device = Device.query.filter_by(name=device_id).first()
             if device.next_page(): # 페이지 잘 넘어감
