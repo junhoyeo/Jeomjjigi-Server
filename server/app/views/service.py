@@ -47,6 +47,8 @@ def convert(query):
         if braille_count + len(brailles) > PAGE_LIMIT: # next page
             result.append(page)
             page = brailles
+            for i in range(0, (PAGE_LIMIT - len(brailles))):
+                page.append([0, 0, 0, 0, 0, 0])
             braille_count = len(brailles)
         else: # add in current page
             braille_count += len(brailles)
