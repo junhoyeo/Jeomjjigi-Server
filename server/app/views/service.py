@@ -161,7 +161,7 @@ class ServicePagePrev(Resource):
             device = Device.query.filter_by(name=device_id).first()
             if device.prev_page(): # 페이지 잘 돌아감
 
-                send_to_device(device_id, device.page()) # device.page()를 전송
+                # send_to_device(device_id, device.page()) # device.page()를 전송
                 
                 return device.page()
             else:
@@ -183,7 +183,7 @@ class ServicePageNext(Resource):
             device = Device.query.filter_by(name=device_id).first()
             if device.next_page(): # 페이지 잘 넘어감
 
-                send_to_device(device_id, device.page()) # device.page()를 전송
+                # send_to_device(device_id, device.page()) # device.page()를 전송
 
                 return device.page()
             else:
