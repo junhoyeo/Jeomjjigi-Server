@@ -18,7 +18,7 @@ class Device(db.Model):
 
     def page(self): # get current page
         data = str(self.text[self.current])
-        return data.replace(', ', '')[1:-1]
+        return '{' + data.replace(', ', '')[1:-1] + '}'
 
     def next_page(self): # 다음 페이지
         try: 
