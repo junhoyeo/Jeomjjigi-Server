@@ -17,7 +17,8 @@ class Device(db.Model):
         db.session.commit()
 
     def page(self): # get current page
-        return self.text[self.current]
+        data = str(self.text[self.current])
+        return data.replace(', ', '')[1:-1]
 
     def next_page(self): # 다음 페이지
         try: 
